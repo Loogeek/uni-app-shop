@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <view class="index">index</view>
+  <view class="index">123123</view>
 </template>
 
 <style lang="scss">
