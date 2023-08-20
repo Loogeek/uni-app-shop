@@ -10,6 +10,7 @@ import { useGuessYouLike } from '@/composables'
 import CategoryPanel from './components/CategoryPanel'
 import HotPanel from './components/HotPanel.vue'
 import Navbar from './components/Navbar.vue'
+import Skeletion from './components/Skeleton.vue'
 
 // 首页轮播图
 const bannerList = ref<BannerItem>([])
@@ -48,8 +49,11 @@ const onRefresherrefresh = async () => {
   isTriggered.value = false
 }
 
+const isLoading = ref(true)
+
 onLoad(async () => {
   await Promise.all([getBannerListData(), getCategoryPanelListData(), getHotPanelListData()])
+  isLoading.value = false
 })
 </script>
 
@@ -65,10 +69,13 @@ onLoad(async () => {
       class="scroll-view"
       scroll-y
     >
-      <Swiper :list="bannerList" />
-      <CategoryPanel :list="categoryPanelList" />
-      <HotPanel :list="hotPanelList" />
-      <Guess ref="guessRef" />
+      <Skeletion v-if="isLoading" />
+      <template v-else>
+        <Swiper :list="bannerList" />
+        <CategoryPanel :list="categoryPanelList" />
+        <HotPanel :list="hotPanelList" />
+        <Guess ref="guessRef" />
+      </template>
     </scroll-view>
   </view>
 </template>
