@@ -1,4 +1,5 @@
-import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
+import type { PageResult, PageParams } from '@/types/global'
+import type { BannerItem, CategoryItem, HotItem, GuessItem } from '@/types/home'
 import { request } from '@/utils/request'
 
 interface IHomeBannerParams {
@@ -35,5 +36,16 @@ export const getHomeHotPanelAPI = () => {
   return request<HotItem[]>({
     method: 'GET',
     url: '/home/hot/mutli',
+  })
+}
+
+/**
+ * 猜你喜欢-小程序
+ */
+export const getHomeGoodsGuessLikeAPI = (params?: PageParams) => {
+  return request<PageResult<GuessItem>>({
+    method: 'GET',
+    url: '/home/goods/guessLike',
+    data: params,
   })
 }
