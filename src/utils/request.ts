@@ -55,7 +55,7 @@ uni.addInterceptor('uploadFile', httpInterceptor)
  */
 
 interface Data<T> {
-  code: number
+  code: string
   msg: string
   result: T
 }
