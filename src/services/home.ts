@@ -1,4 +1,4 @@
-import type { BannerItem } from '@/types/home'
+import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
 import { request } from '@/utils/request'
 
 interface IHomeBannerParams {
@@ -18,5 +18,22 @@ export const getHomeBannerAPI = (
     data: {
       distributionSite,
     },
+  })
+}
+
+export const getHomeCategoryPanelAPI = () => {
+  return request<CategoryItem[]>({
+    url: '/home/category/mutli',
+    method: 'GET',
+  })
+}
+
+/**
+ * 首页-热门推荐-小程序
+ */
+export const getHomeHotPanelAPI = () => {
+  return request<HotItem[]>({
+    method: 'GET',
+    url: '/home/hot/mutli',
   })
 }
