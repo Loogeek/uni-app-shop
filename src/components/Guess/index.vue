@@ -2,10 +2,11 @@
 import { onMounted, ref } from 'vue'
 import { getHomeGoodsGuessLikeAPI } from '@/services/home'
 import type { GuessItem } from '@/types/home'
+import type { PageParams } from '@/types/global'
 
 const pageParams: Required<PageParams> = {
   page: 1,
-  size: 10,
+  pageSize: 10,
 }
 const guessList = ref<GuessItem[]>([])
 const finish = ref(false)

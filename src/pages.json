@@ -33,7 +33,13 @@
       "style": {
         "navigationBarTitleText": "分类"
       }
-    }
+    },
+    {
+			"path": "pages/hot/hot",
+			"style": {
+				"navigationBarTitleText": "热门推荐"
+			}
+		}
   ],
   "globalStyle": {
     "navigationBarTextStyle": "black",

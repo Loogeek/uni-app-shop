@@ -7,26 +7,27 @@ import type { BannerItem, CategoryItem } from '@/types/home'
 import Swiper from '@/components/Swiper'
 import Guess from '@/components/Guess'
 import { useGuessYouLike } from '@/composables'
+import type { HotItem } from '@/types/home'
 import CategoryPanel from './components/CategoryPanel'
 import HotPanel from './components/HotPanel.vue'
 import Navbar from './components/Navbar.vue'
 import Skeletion from './components/Skeleton.vue'
 
 // 首页轮播图
-const bannerList = ref<BannerItem>([])
+const bannerList = ref<BannerItem[]>([])
 const getBannerListData = async () => {
   const res = await getHomeBannerAPI()
   bannerList.value = res.result
 }
 
 // 获取首页分类数据
-const categoryPanelList = ref<CategoryItem>([])
+const categoryPanelList = ref<CategoryItem[]>([])
 const getCategoryPanelListData = async () => {
   const res = await getHomeCategoryPanelAPI()
   categoryPanelList.value = res.result
 }
 
-const hotPanelList = ref<HotItem>([])
+const hotPanelList = ref<HotItem[]>([])
 const getHotPanelListData = async () => {
   const res = await getHomeHotPanelAPI()
   hotPanelList.value = res.result
