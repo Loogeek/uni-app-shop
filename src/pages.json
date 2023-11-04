@@ -23,6 +23,12 @@
       }
     },
     {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
       "path": "pages/cart/cart",
       "style": {
         "navigationBarTitleText": "购物车"
