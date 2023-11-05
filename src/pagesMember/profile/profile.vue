@@ -27,7 +27,7 @@ onLoad(() => {
     <!-- 头像 -->
     <view class="avatar">
       <view class="avatar-content">
-        <image class="image" src=" " mode="aspectFill" />
+        <image class="image" :src="profile.avatar" mode="aspectFill" />
         <text class="text">点击修改头像</text>
       </view>
     </view>
