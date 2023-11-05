@@ -10,6 +10,20 @@
       "list": [
         {
           "name": "",
+          "pathName": "pagesMember/profile/profile",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
           "pathName": "pages/my/my",
           "query": "",
           "launchMode": "default",

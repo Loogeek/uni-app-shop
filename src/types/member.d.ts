@@ -17,3 +17,21 @@ export type LoginResult = BaseProfile & {
   /** 登录凭证 */
   token: string
 }
+
+/** 个人信息 用户详情信息 */
+export type ProfileDetail = BaseProfile & {
+  /** 性别 */
+  gender?: Gender
+  /** 生日 */
+  birthday?: string
+  /** 省市区 */
+  fullLocation?: string
+  /** 职业 */
+  profession?: string
+}
+
+/** 性别 */
+export enum Gender {
+  women = '女',
+  man = '男',
+}
