@@ -3,15 +3,45 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import { getMemberProfileAPI } from '@/services/profile'
 import type { ProfileDetail } from '@/types/member'
+import { useMemberStore } from '@/stores'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 const profile = ref({} as ProfileDetail)
+const memberStore = useMemberStore()
 
 async function getMemberProfileData() {
   const resp = await getMemberProfileAPI()
   profile.value = resp.result
 }
 
+const onAvatarChange = () => {
+  uni.chooseMedia({
+    count: 1,
+    mediaType: ['image'],
+    success: (resp) => {
+      const { tempFilePath } = resp.tempFiles[0]
+      uni.uploadFile({
+        url: '/member/profile/avatar',
+        filePath: tempFilePath,
+        name: 'file',
+        success: ({ data, statusCode }) => {
+          if (statusCode === 200) {
+            const resp = JSON.parse(data)
+            memberStore.profile!.avatar = resp.avatar
+            profile.value.avatar = resp.avatar
+            uni.showToast({ icon: 'success', title: '更新头像' })
+          } else {
+            uni.showToast({ icon: 'error', title: '更新头像失败' })
+          }
+        },
+        fail: (error) => {
+          console.error('[Change Avatar Error]:', error)
+          uni.showToast({ icon: 'error', title: '更新头像失败' })
+        },
+      })
+    },
+  })
+}
 onLoad(() => {
   getMemberProfileData()
 })
@@ -26,7 +56,7 @@ onLoad(() => {
     </view>
     <!-- 头像 -->
     <view class="avatar">
-      <view class="avatar-content">
+      <view class="avatar-content" @tap="onAvatarChange">
         <image class="image" :src="profile.avatar" mode="aspectFill" />
         <text class="text">点击修改头像</text>
       </view>
