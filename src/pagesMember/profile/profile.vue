@@ -31,9 +31,9 @@ const onAvatarChange = () => {
         success: ({ data, statusCode }) => {
           if (statusCode === 200) {
             const resp = JSON.parse(data)
-            memberStore.profile!.avatar = resp.avatar
-            profile.value.avatar = resp.avatar
-            uni.showToast({ icon: 'success', title: '更新头像' })
+            memberStore.profile!.avatar = resp.result.avatar
+            profile.value.avatar = resp.result.avatar
+            uni.showToast({ icon: 'success', title: '更新头像成功' })
           } else {
             uni.showToast({ icon: 'error', title: '更新头像失败' })
           }
