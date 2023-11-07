@@ -10,7 +10,7 @@
       "list": [
         {
           "name": "",
-          "pathName": "pagesMember/profile/profile",
+          "pathName": "pagesMember/address/address",
           "query": "",
           "launchMode": "default",
           "scene": null
@@ -24,7 +24,14 @@
         },
         {
           "name": "",
-          "pathName": "pages/my/my",
+          "pathName": "pages/index/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/index/index",
           "query": "",
           "launchMode": "default",
           "scene": null
