@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import { getMemberProfileAPI } from '@/services/profile'
-import type { ProfileDetail } from '@/types/member'
+import { getMemberProfileAPI, putMemberProfileAPI } from '@/services/profile'
+import type { ProfileDetail, Gender } from '@/types/member'
 import { useMemberStore } from '@/stores'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
@@ -12,6 +12,10 @@ const memberStore = useMemberStore()
 async function getMemberProfileData() {
   const resp = await getMemberProfileAPI()
   profile.value = resp.result
+
+  // 同步更新存储数据
+  memberStore.profile!.avatar = profile.value.avatar
+  memberStore.profile!.nickname = profile.value.nickname
 }
 
 const onAvatarChange = () => {
@@ -42,6 +46,41 @@ const onAvatarChange = () => {
     },
   })
 }
+
+const onGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
+  profile.value.gender = ev.detail.value as Gender
+}
+
+let fullLocationCode = ['', '', '']
+const onFullLocationChange: UniHelper.RegionPickerOnChange = (ev) => {
+  fullLocationCode = ev.detail.code!
+  profile.value.fullLocation = ev.detail.value.join(' ')
+}
+
+const onBirthdayChange: UniHelper.DatePickerOnChange = (ev) => {
+  profile.value.birthday = ev.detail.value
+}
+
+const onSubmit = async () => {
+  const { nickname, profession, gender, birthday } = profile.value
+  const [provinceCode, cityCode, countyCode] = fullLocationCode
+  await putMemberProfileAPI({
+    nickname,
+    profession,
+    gender,
+    birthday,
+    provinceCode,
+    cityCode,
+    countyCode,
+  })
+
+  memberStore.profile!.nickname = nickname
+  uni.showToast({ icon: 'success', title: '更新成功' })
+  setTimeout(() => {
+    uni.navigateBack()
+  }, 500)
+}
+
 onLoad(() => {
   getMemberProfileData()
 })
@@ -75,7 +114,7 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">性别</text>
-          <radio-group>
+          <radio-group @change="onGenderChange">
             <label class="radio">
               <radio value="男" color="#27ba9b" :checked="profile?.gender === '男'" />
               男
@@ -94,6 +133,7 @@ onLoad(() => {
             start="1900-01-01"
             :end="new Date()"
             :value="profile?.birthday"
+            @change="onBirthdayChange"
           >
             <view v-if="profile.birthday">{{ profile?.birthday }}</view>
             <view class="placeholder" v-else>请选择日期</view>
@@ -101,8 +141,13 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">城市</text>
-          <picker class="picker" mode="region" :value="profile.fullLocation?.split(' ')">
-            <view v-if="profile.fullLocation">{{ profile.fullLocation?.split(' ') }}</view>
+          <picker
+            class="picker"
+            @change="onFullLocationChange"
+            mode="region"
+            :value="profile.fullLocation?.split(' ')"
+          >
+            <view v-if="profile.fullLocation">{{ profile.fullLocation }}</view>
             <view class="placeholder" v-else>请选择城市</view>
           </picker>
         </view>
@@ -112,7 +157,7 @@ onLoad(() => {
         </view>
       </view>
       <!-- 提交按钮 -->
-      <button class="form-button">保 存</button>
+      <button class="form-button" @tap="onSubmit">保 存</button>
     </view>
   </view>
 </template>
