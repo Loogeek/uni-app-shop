@@ -15,3 +15,10 @@ export const getMemberAddressAPI = () => {
     method: 'GET',
   })
 }
+
+export const deleteMemberAddressAPI = (id: string) => {
+  return request({
+    url: `/member/address/${id}`,
+    method: 'DELETE',
+  })
+}

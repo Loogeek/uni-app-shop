@@ -92,3 +92,6 @@ export const request = <T>(options: UniApp.RequestOptions) => {
     })
   })
 }
+export enum ApiCode {
+  SUCCESS = '1',
+}

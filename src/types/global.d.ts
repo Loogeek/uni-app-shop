@@ -38,3 +38,7 @@ export type GoodsItem = {
   /** 商品价格 */
   price: number
 }
+
+export enum ApiCode {
+  SUCCESS = '1',
+}
